@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 const Carousel = (props) => {
   const data = props.data;
-  console.log(data);
 
   const [activeIndex, setActiveIndex] = useState(0);
 

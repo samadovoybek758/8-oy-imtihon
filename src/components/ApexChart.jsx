@@ -41,6 +41,7 @@ export default function PriceChart({ id, days }) {
         },
         grid: {
           colors: "#A9A9A9",
+          show: true, 
         },
       },
     },

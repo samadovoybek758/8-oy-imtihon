@@ -72,7 +72,7 @@ function Home() {
 
   const navigate = useNavigate();
   function handleClick(id) {
-    console.log(id);
+    // console.log(id);
     navigate(`/details/${id}`);
     dispatch(Add(id));
   }
@@ -118,7 +118,7 @@ function Home() {
         })
         .then((data) => {
           // setData([data]);
-          console.log(data);
+          // console.log(data);
         })
         .catch((err) => {
           console.log(err);
@@ -312,7 +312,7 @@ function Home() {
 
                       <button
                         onClick={() => handleDelet(value.id)}
-                        className="py-1 mb-4 px-4 bg-[#FF0000] text-white font-normal text-xl rounded-sm"
+                        className="py-1 mb-2 px-4 bg-[#FF0000] text-white font-normal text-xl rounded-sm"
                       >
                         Remove
                       </button>
