@@ -178,7 +178,7 @@ function Home() {
             <p className="text-[#A9A9A9] font-[Montserrat] text-sm">
               Get all the Info regarding your favorite Crypto Currency
             </p>
-            <div className="">
+            <div className="mt-10">
               <Carousel data={data}></Carousel>
             </div>
           </div>

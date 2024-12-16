@@ -27,9 +27,9 @@ const Carousel = (props) => {
               <div key={index} className="w-[115px] px-3 flex items-center flex-col">
                 <img className="w-20 h-20" src={value.image} alt="" />
                 <div className="flex flex-row gap-[13px]">
-                  <span className="text-base font-normal font-[Roboto] text-white">{value.symbol}</span>
+                  <span className="text-base font-normal font-[Roboto] mt-2 text-white">{value.symbol}</span>
                   <span
-                          className={`font-normal text-sm font-[Roboto] ${
+                          className={`font-normal mt-2 text-sm font-[Roboto] ${
                             value.price_change_percentage_24h > 0
                               ? "text-[#0ECB81]"
                               : "text-[#FF0000]"
