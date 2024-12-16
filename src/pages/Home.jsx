@@ -139,7 +139,7 @@ function Home() {
     <div>
       <header>
         <div className="bg-[#16171A]">
-          <div className="continerr flex justify-between py-3">
+          <div className="continerr flex justify-between py-3 ">
             <h1 className="font-[Montserrat] text-[#87CEEB] font-bold text-xl">
               CRYPTOFOLIO
             </h1>
