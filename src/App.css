@@ -1,0 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat';
+}
+.continerr{
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.header{
+    background-image: url('../src/assets/bg_1.jpg');
+    padding-top: 54.89px;
+}
