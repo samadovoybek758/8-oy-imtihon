@@ -8,89 +8,68 @@ import { useDispatch, useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import right from "../assets/right.svg";
 import left from "../assets/left.svg";
-import { retry } from "@reduxjs/toolkit/query";
 
 function Home() {
   const [data, setData] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [listdata, setListdata] = useState([]);
   const listideas = useSelector((state) => state.List.ideas);
   const dispatch = useDispatch();
   const selectRef = useRef();
   const inputRef = useRef();
-  const [currentPage, setCurrentPage] = useState(0); 
-  const [totalPages, setTotalPages] = useState(1); 
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const itemsPerPage = 10; 
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    Pagin(currentPage +1)
-    
+    Pagin(currentPage + 1);
+
     const storedIsOpen = localStorage.getItem("isMenuOpen");
     if (storedIsOpen !== null) {
       setIsOpen(JSON.parse(storedIsOpen));
     }
 
-    // fetch(
-    //   "https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=gecko_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h"
-    // )
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       return res.json();
-    //     }
-    //   })
-    //   .then((data) => {
-    //     setData(data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
     if (listideas.length > 0) {
       const fetchData = () => {
         Promise.all(
           listideas.map((id) =>
-            fetch(`https://api.coingecko.com/api/v3/coins/${id}`)
-              .then((res) => res.json())
+            fetch(`https://api.coingecko.com/api/v3/coins/${id}`).then((res) =>
+              res.json()
+            )
           )
         )
           .then(setListdata)
           .catch((error) => {
-            console.error(error)
+            console.error(error);
           });
       };
       fetchData();
     }
-
-
-    
-  }, [listideas,currentPage]);
-
+  }, [listideas, currentPage]);
 
   function Pagin(page) {
     fetch(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=gecko_desc&per_page=${itemsPerPage}&page=${page}&sparkline=false&price_change_percentage=24h`)
-      .then(res => {
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=gecko_desc&per_page=${itemsPerPage}&page=${page}&sparkline=false&price_change_percentage=24h`
+    )
+      .then((res) => {
         if (res.status == 200) {
-          return res.json()
+          return res.json();
         }
       })
-      .then(data =>{
+      .then((data) => {
         setData(data);
         setTotalPages(Math.ceil(100 / itemsPerPage));
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
-    
+      });
   }
 
   function handlePageClick(event) {
-    setCurrentPage(event.selected); 
+    setCurrentPage(event.selected);
   }
 
-
-  
   const navigate = useNavigate();
   function handleClick(id) {
     console.log(id);
@@ -138,7 +117,7 @@ function Home() {
           }
         })
         .then((data) => {
-          setData(data);
+          // setData([data]);
           console.log(data);
         })
         .catch((err) => {
@@ -147,15 +126,15 @@ function Home() {
     }
 
     inputRef.current.value = "";
+
   }
-  
+
   function isWatch(listideas) {
     return data.forEach(function (value) {
-      
       return listideas.includes(value.id);
     });
   }
-  
+
   return (
     <div>
       <header>
@@ -268,16 +247,15 @@ function Home() {
                           : selectRef.current.value === "RUB"
                           ? "₽ "
                           : "$ "}
-                        {value.current_price.toLocaleString('en-US')}
+                        {value.current_price.toLocaleString("en-US")}
                       </span>
                       <div className="flex items-center gap-[18.86px]">
-                      
-                      {isWatch ? (
-    <img src={white_eyes} alt="White Iye" />
-) : (
-
-  <img src={right} alt="Right Icon" />
-)}
+                        {isWatch ? (
+                          <img src={white_eyes} alt="White Iye" />
+                        ) : (
+                          <img src={right} alt="" />
+                        )}
+                        
                         <span
                           className={`font-normal text-sm font-[Roboto] ${
                             value.price_change_percentage_24h > 0
@@ -294,7 +272,7 @@ function Home() {
                           : selectRef.current.value === "RUB"
                           ? "₽ "
                           : "$ "}
-                        {value.market_cap.toLocaleString('en-US')}
+                        {value.market_cap.toLocaleString("en-US")}
                       </span>
                     </div>
                   </div>
@@ -326,7 +304,10 @@ function Home() {
                         alt=""
                       />
                       <span className="mb-4 font-[Roboto] font-normal text-xl">
-                        ${value.market_data.market_cap.usd.toLocaleString('en-US')}
+                        $
+                        {value.market_data.market_cap.usd.toLocaleString(
+                          "en-US"
+                        )}
                       </span>
 
                       <button
@@ -350,11 +331,11 @@ function Home() {
         </div>
 
         <div className="max-w-[600px] mx-auto pb-5 items-center">
-        <ReactPaginate
+          <ReactPaginate
             previousLabel={<img src={left} />}
             nextLabel={<img src={right} />}
             breakLabel={"..."}
-            pageCount={totalPages} 
+            pageCount={totalPages}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
             containerClassName={"flex justify-center space-x-2 items-center "}
@@ -364,7 +345,7 @@ function Home() {
             previousClassName={"px-4 py-2  rounded-md cursor-pointer"}
             nextClassName={"px-4 py-2  rounded-md cursor-pointer"}
             activeClassName={"bg-gray-700"}
-            onPageChange={handlePageClick} 
+            onPageChange={handlePageClick}
           />
         </div>
       </main>

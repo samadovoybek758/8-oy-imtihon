@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Remove } from "../store/watchList";
-import MyChart from "../components/ApexChart";
-import Chart from "../components/ApexChart";
 import ApexChart from "../components/ApexChart";
 
 function Details() {
@@ -69,7 +67,6 @@ function Details() {
   function handleHours(e) {
     e.preventDefault()
     setDays(1)
-    // console.log("sfgdf");
   }
 
 
@@ -90,8 +87,7 @@ function Details() {
                 className="cursor-pointer bg-transparent text-white px-3"
                 name=""
                 id=""
-                // onChange={Selected}
-                // ref={selectRef}
+              
               >
                 <option className="bg-[#16171A]" value="USD">
                   USD
@@ -111,6 +107,7 @@ function Details() {
               </button>
             </div>
           </div>
+          <div className="h-1 w-full bg-gray-950"></div>
         </div>
 
         <div className="max-w-[1920px] mx-auto">

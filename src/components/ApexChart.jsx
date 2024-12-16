@@ -1,28 +1,25 @@
 import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
-import axios from "axios";
 
 export default function PriceChart({ id, days }) {
-  const [chartData, setChartData] = useState([]);
-  const [chartLabels, setChartLabels] = useState([]);
+  const [Ydata, setYdata] = useState([]);
+  const [Xdata, setXdata] = useState([]);
 
   useEffect(() => {
-    const fetchChartData = async () => {
-      try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`
-        );
-        const data = await response.json();
-        const prices = data.prices;
-        setChartData(prices.map((price) => price[1]));
-        setChartLabels(prices.map((price) => new Date(price[0]).toLocaleDateString()));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-  
-    fetchChartData();
-  }, [id, days]);
+      fetch(
+        `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`
+      )
+        .then((response) => response.json())  
+        .then((data) => {
+          const price = data.prices;
+          setXdata(price.map((price) => new Date(price[0]).toLocaleDateString()));
+          setYdata(price.map((price) => price[1]));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+   [id, days]);
 
   const options = {
     chart: {
@@ -37,13 +34,13 @@ export default function PriceChart({ id, days }) {
       mode: "dark",
     },
     xaxis: {
-      categories: chartLabels,
+      categories: Xdata,
       labels: {
         style: {
           colors: "#A9A9A9",
         },
         grid: {
-          show: true, 
+          colors: "#A9A9A9",
         },
       },
     },
@@ -55,17 +52,14 @@ export default function PriceChart({ id, days }) {
         },
         formatter: (value) =>{
           return value.toFixed(2)
+        },
+        grid: {
+          show: false,  
         }
       },
+     
     },
-    stroke: {
-      curve: "smooth",
-      width: 2, 
-      colors: ['#87CEEB']
-    },
-    dataLabels: {
-      enabled: false,
-    },
+    
     fill: {
       type: "solid",
       opacity: 0,
@@ -81,12 +75,20 @@ export default function PriceChart({ id, days }) {
     tooltip: {
       theme: "dark",
     },
+    stroke: {
+      curve: "smooth",
+      width: 2, 
+      colors: ['#87CEEB']
+    },
+    dataLabels: {
+      enabled: false,
+    },
   };
 
   const series = [
     {
       name: "Price (USD)",
-      data: chartData,
+      data: Ydata,
     },
   ];
 
